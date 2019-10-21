@@ -6,10 +6,15 @@ div
   //- selectedArtwork SLIDER
   div(v-if='selectedArtwork != null')
     j-artwork(v-model='selectedArtwork')
+
+
+  |upload
   j-upload-zone(ref='zone',@select='addBitmapsFromFiles') <!-- do not delete! -->
+
+
   // COLLECTION
+  |Collection
   j-panel(icon='business', title='O', :width='185', :height='850', :x='5', :y='5')
-    |test
     div.j-panel-toolbar.text-black(slot='toolbar', style='padding:4px;')
       q-btn(small,push,icon='art track', @click='addArtwork')
       q-btn(small,push,icon='satellite', @click='openFileInput')
@@ -26,11 +31,13 @@ div
 
 
   //- selectedBitmapImageData
+  |selectedBitmapImageData
   j-panel(v-if='selectedBitmapImageData != null', icon='business', title='Selected Bitmap', :width='200', :height='300', :x='110', :y='400')
     div.j-tray.area.panel-item-grow(slot='content')
       j-canvas.frame-type-grid(:image-data='selectedBitmapImageData')
 
   //- selectedPaletteImageData
+  |selectedPaletteImageData
   j-panel(v-if='selectedPaletteImageData != null', icon='business', title='Selected Palette', :width='200', :height='300', :x='10', :y='400')
     div.j-tray.area.panel-item-grow(slot='content')    
       j-canvas.frame-type-grid(:image-data='selectedPaletteImageData')
@@ -54,7 +61,9 @@ import iq from 'image-q'
 
 // CREATE INITIAL DATA
 import ColorUtils from 'src/moe/utils/moe.utils.color.js'
-
+import jPanel from 'components/custom/j-panel'
+import jUploadZone from 'components/custom/j-upload-zone'
+import jCollection from 'components/custom/j-collection'
 
 // let pal = colorUtils.getMaterialColors(0,256)
 // let palObj = {}
@@ -63,7 +72,7 @@ import ColorUtils from 'src/moe/utils/moe.utils.color.js'
 
 export default {
   name: 'view-mauver',
-  components: { QBtn},
+  components: { QBtn, jPanel, jUploadZone, jCollection},
   created () {
     // Create Default Palette & Bitmnap
     //
@@ -92,9 +101,7 @@ export default {
       palId: 10,
       bmpId: 0,
       colId: 0,
-      leverTest: 0,
-
-      bitmaps: []
+      leverTest: 0
 
     }
   },
@@ -182,6 +189,7 @@ export default {
     },
 
     addBitmapsFromFiles (files) {
+      debugger
       for (let i = 0; i < files.length; i++) {
         let file = files[i]
         Factory.createBitmapFromFile(file).then((bmp) => {
