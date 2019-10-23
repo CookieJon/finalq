@@ -19,7 +19,7 @@
         <div>Q v{{ $q.version }}</div>
       </q-toolbar> -->
     </q-header>
-
+<!-- 
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
@@ -82,7 +82,7 @@
           </q-item-section>
         </q-item>
       </q-list>
-    </q-drawer>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />

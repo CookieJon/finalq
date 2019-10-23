@@ -1,5 +1,6 @@
-<template lang="pug">
+<!--
 
+<xtemplate lang="pug">
 
   div
     //-  PREVIEW (w.bitmsp2 branch)
@@ -18,7 +19,7 @@
 
         //- LEVER
         q-card(color='dark')
-          q-card-main.row
+          q-card-section.row
               j-lever(v-model='controlTargetPower', rest='50%', :markers='true',
                 :labelAlways='true',
                 orientation='vertical',
@@ -47,7 +48,7 @@
                   q-input.col(stack-label='Sliding Speeds Pattern', dark, v-model='slidingSpeedsPattern')
                 div.col-1
                   q-btn(small,push,ref='target')|?
-                    q-popover(ref='popover')
+                    q-menu(ref='popover')
                       q-list(separator,link,style="min-width: 100px")
                         q-item(
                           v-for="(n, i) in presetSlidingSpeedOptions",
@@ -79,7 +80,7 @@
                 div.row(v-for='filter, i in value.filters' @click='setActiveFilter(i)')
                   q-card(color='dark' :class='i === activeFilter ? "active" : ""')
 
-                    q-card-main(v-if='filter.type === "slider"')
+                    q-card-section(v-if='filter.type === "slider"')
                       div.row
                         |{{i}} SLD
                         
@@ -88,7 +89,7 @@
                         j-canvas(:id='"Filter"+i+"ImageData"' :value='value.filters[i].imageData', width='40px' height='40px')
                         q-btn(small push @click='deleteFilter(i)')|-
 
-                    q-card-main(v-else-if='filter.type === "bitmap"')
+                    q-card-section(v-else-if='filter.type === "bitmap"')
                       div.row
                         |{{i}} BMP
                         //- |{{ value.filters[i].pixelsOut }}
@@ -100,7 +101,7 @@
                  
           //- PALETTE
           q-card(color='dark')
-            q-card-main.row
+            q-card-section.row
               div.col
                 div.row
                   |PALETTE
@@ -116,7 +117,7 @@
 
           //- PIXELMAP
           q-card(color='dark')
-            q-card-main
+            q-card-section
               div.row
                 |PIXELMAP
               div.row
@@ -131,6 +132,12 @@
     </q-card-main>
   </q-card-media>
 
+</xtemplate>
+-->
+<template lang="pug">
+  div
+    p
+
 </template>
 
 <script>
@@ -140,9 +147,10 @@
 // import { Platform } from 'quasar'
 // const TWEEN = require('es6-tween')
 
-import {QScrollArea, QPopover, QList, QItem, QItemMain, QToggle, QOptionGroup, QBtn, QCard, QCardMain, QCardSeparator, QCardMedia, QCardTitle, QField, QInput, QSelect} from 'quasar'
+import {QScrollArea, QMenu, QList, QItem, QItemLabel, QToggle, QOptionGroup, QBtn, QCard, QCardSection, QSeparator, QField, QInput, QSelect} from 'quasar'
 var jLever = require('components/custom/j-lever')
 var jCanvas = require('components/custom/j-canvas')
+var jPanel = require('components/custom/j-panel')
 var jCollection = require('components/custom/j-collection')
 var jDropTarget = require('components/custom/j-droptarget')
 import Sortable from 'sortablejs'
@@ -167,7 +175,8 @@ export default {
   name: "j-artwork",
   components: {
     jCanvas, jLever, jCollection, jDropTarget,
-    QScrollArea, QPopover, QList, QItem, QItemMain, QToggle, QOptionGroup, QBtn, QCard, QCardMain, QCardSeparator, QCardMedia, QCardTitle, QField, QInput, QSelect
+    jPanel,
+    QScrollArea, QMenu, QList, QItem, QItemLabel, QToggle, QOptionGroup, QBtn, QCard, QCardSection, QSeparator, QField, QInput, QSelect
   },
   props: {
     value: {
@@ -846,7 +855,7 @@ export default {
 
   },
   mounted () {
-    this.myCtx = this.$refs.preview.getContext('2d')
+    //this.myCtx = this.$refs.preview.getContext('2d')
 
   },
   created () {

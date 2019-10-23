@@ -4,7 +4,7 @@
     <div
       ref="container"
       :class='computedClass'
-      @xclick.stop.prevent="openFileInput"
+      @click.stop.prevent="openFileInput"
       @dragenter.stop.prevent="doDragEnter"
       @dragover.stop.prevent="doDragOver"
       @drop.stop.prevent="doDrop"

@@ -14,7 +14,7 @@ div
 
   // COLLECTION
   |Collection
-  j-panel(icon='business', title='O', :width='185', :height='850', :x='5', :y='5')
+  j-panel(icon='business', title='O', :width='185', :height='850', :x='115', :y='5')
     div.j-panel-toolbar.text-black(slot='toolbar', style='padding:4px;')
       q-btn(small,push,icon='art track', @click='addArtwork')
       q-btn(small,push,icon='satellite', @click='openFileInput')
@@ -29,15 +29,15 @@ div
     //- div.j-tray.area.panel-item-grow(slot='content')
     //-   j-collection.frame-type-grid(v-model='palettes', @select='selectPalette')
 
+  j-canvas.frame-type-grid(:value='selectedBitmapImageData')
 
   //- selectedBitmapImageData
-  |selectedBitmapImageData
   j-panel(v-if='selectedBitmapImageData != null', icon='business', title='Selected Bitmap', :width='200', :height='300', :x='110', :y='400')
     div.j-tray.area.panel-item-grow(slot='content')
-      j-canvas.frame-type-grid(:image-data='selectedBitmapImageData')
+      j-canvas.frame-type-grid(:value='selectedBitmapImageData')
+      |{{selectedBitmapId}}
 
   //- selectedPaletteImageData
-  |selectedPaletteImageData
   j-panel(v-if='selectedPaletteImageData != null', icon='business', title='Selected Palette', :width='200', :height='300', :x='10', :y='400')
     div.j-tray.area.panel-item-grow(slot='content')    
       j-canvas.frame-type-grid(:image-data='selectedPaletteImageData')
@@ -64,6 +64,8 @@ import ColorUtils from 'src/moe/utils/moe.utils.color.js'
 import jPanel from 'components/custom/j-panel'
 import jUploadZone from 'components/custom/j-upload-zone'
 import jCollection from 'components/custom/j-collection'
+import jCanvas from 'components/custom/j-canvas'
+import jArtwork from 'components/custom/j-artwork'
 
 // let pal = colorUtils.getMaterialColors(0,256)
 // let palObj = {}
@@ -72,7 +74,7 @@ import jCollection from 'components/custom/j-collection'
 
 export default {
   name: 'view-mauver',
-  components: { QBtn, jPanel, jUploadZone, jCollection},
+  components: { QBtn, jPanel, jUploadZone, jCollection, jCanvas, jArtwork},
   created () {
     // Create Default Palette & Bitmnap
     //
@@ -116,7 +118,7 @@ export default {
     },
     selectedBitmap: {
       get () {
-        return this.$store.getters.getEntityById('artworks', this.selectedBitmapId)
+        return this.$store.getters.getEntityById('bitmaps', this.selectedBitmapId)
       },
       set (value) {
         this.selectedBitmapId = value.id
@@ -189,7 +191,6 @@ export default {
     },
 
     addBitmapsFromFiles (files) {
-      debugger
       for (let i = 0; i < files.length; i++) {
         let file = files[i]
         Factory.createBitmapFromFile(file).then((bmp) => {

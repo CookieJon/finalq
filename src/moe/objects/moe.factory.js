@@ -265,16 +265,14 @@ export default class Factory {
       let color = colors[j]
       iqPalette.add(iq.utils.Point.createByRGBA(color.r, color.g, color.b, color.a))
     }
-    // * iq.distance.?
-    // iq.distance.Euclidean();Manhattan();IEDE2000(); etc...
-    let iqDistance = new iq.distance.EuclideanRgbQuantWOAlpha()
 
     let inPointContainer = iq.utils.PointContainer.fromHTMLCanvasElement(canvas) // use canvas to scale to 256x256
 
-    let iqImage = new iq.image.ErrorDiffusionArray(iqDistance, iq.image.ErrorDiffusionArrayKernel.SierraLite)
-    // let iqImage = new iq.image.NearestColor(iqDistance)
+    let outPointContainer = iq.applyPaletteSync(inPointContainer, iqPalette,  {
+      colorDistanceFormula: 'euclidean', // optional
+      imageQuantization: 'floyd-steinberg', // optional
+    });
 
-    let outPointContainer = iqImage.quantize(inPointContainer, iqPalette)
     let uint8array = outPointContainer.toUint8Array() // <- imagedata data
 
 
