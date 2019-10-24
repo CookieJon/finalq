@@ -18,12 +18,12 @@
     "jquery-ui": "^1.12.1",
     "normalizr": "^3.4.1",
     "number-crunch": "^1.2.3",
-    "quasar": "^1.2.2",
+    "quasar": "^1.2.5",
     "sortablejs": "^1.10.1",
     "vue-i18n": "^8.15.0"
   },
   "devDependencies": {
-    "@quasar/app": "^1.2.1",
+    "@quasar/app": "^1.2.2",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.10.0",
