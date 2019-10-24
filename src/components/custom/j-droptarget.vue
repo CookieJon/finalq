@@ -15,10 +15,11 @@
 /* eslint-disable */
   import { extend, QScrollArea } from 'quasar'
   import Sortable from 'sortablejs'
+  import jItem from 'components/custom/j-item'
 
   export default {
     name: 'j-droptarget',
-    components: { QScrollArea },
+    components: { QScrollArea, jItem },
     props: {
       value: {
         type: Object

@@ -1,19 +1,16 @@
 <template lang="pug">
 <!-- root node required -->
 div
-  |test
-
   //- selectedArtwork SLIDER
   div(v-if='selectedArtwork != null')
+    |test
     j-artwork(v-model='selectedArtwork')
 
 
-  |upload
   j-upload-zone(ref='zone',@select='addBitmapsFromFiles') <!-- do not delete! -->
 
 
   // COLLECTION
-  |Collection
   j-panel(icon='business', title='O', :width='185', :height='850', :x='115', :y='5')
     div.j-panel-toolbar.text-black(slot='toolbar', style='padding:4px;')
       q-btn(small,push,icon='art track', @click='addArtwork')
@@ -29,7 +26,6 @@ div
     //- div.j-tray.area.panel-item-grow(slot='content')
     //-   j-collection.frame-type-grid(v-model='palettes', @select='selectPalette')
 
-  j-canvas.frame-type-grid(:value='selectedBitmapImageData')
 
   //- selectedBitmapImageData
   j-panel(v-if='selectedBitmapImageData != null', icon='business', title='Selected Bitmap', :width='200', :height='300', :x='110', :y='400')

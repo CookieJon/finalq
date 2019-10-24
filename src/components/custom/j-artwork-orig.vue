@@ -38,13 +38,13 @@
 
           //- SPEEDMAP
           q-card(color='dark')
-            q-card-section
+            q-card-main
               div.row
                 |SPEEDMAP
               div.row
                 div.col-11
                   //- q-select(dark, v-model='slidingSpeedsPattern', :options='presetSlidingSpeedOptions')
-                  q-input.col(label='Sliding Speeds Pattern', stack-label=true, dark, v-model='slidingSpeedsPattern')
+                  q-input.col(stack-label='Sliding Speeds Pattern', dark, v-model='slidingSpeedsPattern')
                 div.col-1
                   q-btn(small,push,ref='target')|?
                     q-menu(ref='popover')
@@ -53,7 +53,7 @@
                           v-for="(n, i) in presetSlidingSpeedOptions",
                           :key='i',
                           @click='slidingSpeedsPattern=presetSlidingSpeedOptions[i].value,$refs.popover.close()')
-                          q-item-label(:label='n.label')
+                          q-item-main(:label='n.label')
               div.row
                 q-toggle(v-model="myValue.options.slidingLocked", label='Lock')
                 q-btn(small,push,@click='changePeriod(-1)')|<
@@ -61,9 +61,10 @@
                 q-btn(small,push,@click='changeAmplitude(1)')|+
                 q-btn(small,push,@click='changeAmplitude(-1)')|-
 
+
           //- FILTERS
           q-card(color='dark')
-              q-card-section
+              q-card-main
                 div.row
                   |FILTERS
                 div.row
@@ -74,12 +75,14 @@
                   q-btn(small,push,@click='setActiveFilter(-2)')
                     j-canvas(:value='pipelineFiltered', width='40px' height='40px')
 
+
                 div.row(v-for='filter, i in value.filters' @click='setActiveFilter(i)')
                   q-card(color='dark' :class='i === activeFilter ? "active" : ""')
 
                     q-card-section(v-if='filter.type === "slider"')
                       div.row
                         |{{i}} SLD
+                        
                         j-canvas(:id='"Filter"+i+"Delta"' :value='value.filters[i].delta', width='40px' height='40px')
                         pre(v-html='value.filters[i].pixelSummary')
                         j-canvas(:id='"Filter"+i+"ImageData"' :value='value.filters[i].imageData', width='40px' height='40px')
@@ -94,7 +97,7 @@
                         pre(v-html='value.filters[i].pixelSummary')
                         j-canvas(:id='"Filter"+i+"ImageData"' :value='value.filters[i].imageData', width='40px' height='40px')
                         q-btn(small push @click='deleteFilter(i)')|-
-
+                 
           //- PALETTE
           q-card(color='dark')
             q-card-section.row
@@ -121,7 +124,9 @@
                   j-drop-target(:value='pixelMapInput', @add='dropPixelMapInput($event)', style='width:80px;height:80px;')
                 div.col
 
+                        
                 div.row
+
 
 </template>
 
@@ -134,11 +139,11 @@
 // const TWEEN = require('es6-tween')
 
 import {QScrollArea, QMenu, QList, QItem, QItemLabel, QToggle, QOptionGroup, QBtn, QCard, QCardSection, QSeparator, QField, QInput, QSelect} from 'quasar'
-import jLever from 'components/custom/j-lever'
-import jCanvas from 'components/custom/j-canvas'
-import jPanel from 'components/custom/j-panel'
-import jCollection from 'components/custom/j-collection'
-import jDropTarget from 'components/custom/j-droptarget'
+var jLever = require('components/custom/j-lever')
+var jCanvas = require('components/custom/j-canvas')
+var jPanel = require('components/custom/j-panel')
+var jCollection = require('components/custom/j-collection')
+var jDropTarget = require('components/custom/j-droptarget')
 import Sortable from 'sortablejs'
 import { extend } from 'quasar'
 var crunch = require("number-crunch");
@@ -841,7 +846,7 @@ export default {
 
   },
   mounted () {
-    this.myCtx = this.$refs.preview.getContext('2d')
+    //this.myCtx = this.$refs.preview.getContext('2d')
 
   },
   created () {
