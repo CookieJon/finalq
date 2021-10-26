@@ -15,7 +15,7 @@
     "axios": "^0.18.1",
     "image-q": "^2.1.2",
     "jquery": "^3.4.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "normalizr": "^3.4.1",
     "number-crunch": "^1.2.3",
     "quasar": "^1.2.5",
